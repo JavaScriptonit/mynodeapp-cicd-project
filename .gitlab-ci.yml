@@ -7,10 +7,8 @@ run_unit_tests:
   stage: test
   before_script:
     - echo "Preparing test data..."
-    - pwd
-    - ls
-    - mkdir test-data
-    - ls
+    - chmod +x prepare-tests.sh
+    - ./prepare-tests.sh
   script:
     - echo "Running unit tests..."
   after_script:
