@@ -29,6 +29,8 @@ build_image:
   
 push_image:
   stage: build
+  needs: 
+    - build_image
   script:
     - echo "Logging into docker registry..."
     - echo "Pushing docker image to registry..."
