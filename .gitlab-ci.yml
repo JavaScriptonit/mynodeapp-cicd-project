@@ -8,7 +8,7 @@ run_tests:
 
 build_image:
   script: 
-    - echo "Building the docker image..."
+    - wrong-command "Building the docker image..."
     - echo "Tagging the docker image"
   
 push_image:
