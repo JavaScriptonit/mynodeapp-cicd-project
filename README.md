@@ -1,6 +1,4 @@
-#### This project is for the Devops bootcamp exercise for
-
-#### "Cloud Basics"
+#### This project is for the GitLab CI/CD course
 
 ##### Test
 The project uses jest library for tests. (see "test" script in package.json)
