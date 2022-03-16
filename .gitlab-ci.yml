@@ -14,7 +14,7 @@ run_unit_tests:
   before_script:
     - echo "Preparing test data..."
   script:
-    - echo "Running unit tests..."
+    - echo "Running unit tests for micro service $MICRO_SERVICE_NAME ..."
   after_script:
     - echo "Cleaning up temporary files..."
 
@@ -50,4 +50,4 @@ deploy_image:
     - main
   stage: deploy
   script:
-    - echo "Deploying new docker image to dev server..."
+    - echo "Deploying new docker image to $DEPLOYMENT_ENVIRONMENT ..."
