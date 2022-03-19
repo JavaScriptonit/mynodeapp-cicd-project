@@ -21,7 +21,7 @@ run_unit_tests:
     - echo "Preparing test data..."
   script:
     - echo "Running unit tests for micro service $MICRO_SERVICE_NAME ..."
-    - npm run tests
+    - npm version
   after_script:
     - echo "Cleaning up temporary files..."
 
