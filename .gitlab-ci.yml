@@ -22,32 +22,15 @@ run_unit_tests:
     - docker
     - remote
   stage: test
-  before_script:
-    - echo "Preparing test data..."
   script:
-    - echo "Running unit tests for micro service $MICRO_SERVICE_NAME ..."
-    - npm version
-  after_script:
-    - echo "Cleaning up temporary files..."
+    - npm run test
 
-run_lint_tests:
+
+build_image:
   tags:
     - ec2
     - shell
     - remote
-  stage: test
-  before_script:
-    - echo "Preparing test data..."
-  script:
-    - echo "Running lint tests..."
-  after_script:
-    - echo "Cleaning up temporary files..."    
-
-build_image:
-  image: docker:20.10.14
-  tags:
-    - ec2
-    - dind
   only:
     - main
   stage: build
