@@ -27,6 +27,9 @@ run_unit_tests:
     - npm install
     - npm run test
 
+sast:
+  stage: test
+
 
 build_image:
   tags:
@@ -39,7 +42,6 @@ build_image:
   script:
     - echo "Building the docker image..."
     - echo "Tagging the docker image $image_repository:$image_tag "
-    - docker ps
   
 push_image:
   tags:
@@ -64,3 +66,8 @@ deploy_image:
   script:
     - echo "Deploying new docker image $image_repository:$image_tag to $DEPLOYMENT_ENVIRONMENT using the following configuration file - $PROPERTIES_FILE ..."
     - cat $PROPERTIES_FILE
+
+
+include:
+- template: Security/SAST.gitlab-ci.yml
+
