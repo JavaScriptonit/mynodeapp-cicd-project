@@ -1,4 +1,9 @@
+stages:
+  - test
+  - build
+
 run_tests:
+  stage: test
   image: node:17-alpine3.14
   tags:
     - ec2
@@ -16,6 +21,7 @@ run_tests:
         - app/junit.xml
 
 build_image:
+  stage: build
   tags:
     - ec2
     - shell
@@ -26,6 +32,9 @@ build_image:
     - docker build -t ${CI_REGISTRY_IMAGE}:1.0
 
 push_image:
+  stage: build
+  needs:
+    - build_image
   tags:
     - ec2
     - shell
