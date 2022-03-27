@@ -23,6 +23,7 @@ run_unit_tests:
     - remote
   stage: test
   script:
+    - npm install
     - npm run test
 
 
