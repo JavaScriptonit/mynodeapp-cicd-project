@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --ci --reporters=default --reporters=jest-junit",
     "start": "node server.js"
   },
   "author": "NJ",
