@@ -28,7 +28,6 @@ build_image:
     - remote
   before_script:
     - echo $USER
-    - sudo usermod -aG docker $USER
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
   script:
     - docker build -t ${CI_REGISTRY_IMAGE}:1.0
