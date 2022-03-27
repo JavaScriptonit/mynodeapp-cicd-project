@@ -13,4 +13,4 @@ run_unit_tests:
     when: always
     reports:
       junit:
-        - junit.xml
+        - app/junit.xml
