@@ -7,6 +7,6 @@ test('main index.html file exists', () => {
 });
 
 test('Dockerfile exists', () => {
-  const filePath = path.join("..", __dirname, "Dockerfile")
+  const filePath = path.join(__dirname, "..", "Dockerfile")
   expect(fs.existsSync(filePath)).toBeTruthy();
 });
