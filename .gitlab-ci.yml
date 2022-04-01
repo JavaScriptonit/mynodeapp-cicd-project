@@ -4,7 +4,7 @@ stages:
   - deploy
 
 variables:
-  APP_ENDPOINT_DEV: http://ec2-15-236-180-248.eu-west-3.compute.amazonaws.com
+  APP_ENDPOINT_DEV: http://ec2-15-236-180-248.eu-west-3.compute.amazonaws.com:3000
   IMAGE_NAME: $CI_REGISTRY_IMAGE/microservice/$MICRO_SERVICE_NAME  
   IMAGE_TAG: "1.0"
   DEV_ENV_HOST: "15.236.180.248"
