@@ -68,7 +68,7 @@ deploy_dev:
   script:
     - ssh -o StrictHostKeyChecking=no ubuntu@$DEV_ENV_HOST "
         docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
-        docker run -d $IMAGE_NAME:$IMAGE_TAG"
+        docker run -d -p 3000:3000 $IMAGE_NAME:$IMAGE_TAG"
   environment:
     name: development
     url: $APP_ENDPOINT_DEV
