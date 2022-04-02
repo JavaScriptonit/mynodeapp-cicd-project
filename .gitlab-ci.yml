@@ -70,7 +70,7 @@ deploy_dev:
     - ssh -o StrictHostKeyChecking=no ubuntu@$DEV_ENV_HOST "
         docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && 
 
-        export IMAGE_TAG=$VERSION && 
+        export IMAGE_TAG=$IMAGE_TAG && 
         export IMAGE_NAME=$IMAGE_NAME &&
 
         docker-compose down --rmi 'local' && 
