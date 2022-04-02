@@ -1,0 +1,5 @@
+services:
+  app:
+    image: ${IMAGE_NAME}:${IMAGE_TAG}
+    ports:
+      - 3000:3000
