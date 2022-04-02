@@ -66,7 +66,7 @@ deploy_dev:
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
   script:
-    - scp -o StrictHostKeyChecking=no ./docker-compose.yaml ubuntu@$DEV_ENV_HOST:/home/ubuntu/docker-compose.yml
+    - scp -o StrictHostKeyChecking=no ./docker-compose.yaml ubuntu@$DEV_ENV_HOST:/home/ubuntu/docker-compose.yaml
     - ssh -o StrictHostKeyChecking=no ubuntu@$DEV_ENV_HOST "
         docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && 
 
