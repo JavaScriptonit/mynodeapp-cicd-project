@@ -66,9 +66,13 @@ deploy_dev:
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
   script:
-    - ssh -o StrictHostKeyChecking=no ubuntu@$DEV_ENV_HOST "
-        docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
-        docker run -d -p 3000:3000 $IMAGE_NAME:$IMAGE_TAG"
+    - scp -o StrictHostKeyChecking=no ./docker-compose.yaml ubuntu@$DEV_ENV_HOST:/home/ubuntu/docker-compose.yml
+    - ssh -o StrictHostKeyChecking=no ubuntu@$STAGING_ENV_HOST "
+        docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && 
+
+        docker-compose down --rmi 'local' && 
+        docker-compose pull &&
+        docker-compose up -d"
  
  
 
