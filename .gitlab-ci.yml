@@ -5,12 +5,14 @@ workflow:
     - when: always
 
 variables:
-  IMAGE_NAME: $CI_REGISTRY_IMAGE/microservice/$MICRO_SERVICE
+  IMAGE_NAME: $CI_REGISTRY_IMAGE
   IMAGE_TAG: "1.1"
+  DEV_SERVER_HOST: 35.180.46.122
 
 stages:
   - test
   - build
+  - deploy
 
 run_unit_tests:
   image: node:17-alpine3.14
@@ -55,5 +57,16 @@ push_image:
   script:
     - docker push $IMAGE_NAME:$IMAGE_TAG
 
+
+deploy_to_dev:
+  stage: deploy
+  tags: 
+    - ec2
+    - shell
+    - remote
+  script:
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_HOST "
+        docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
+        docker run -d -p 3000:3000 $IMAGE_NAME:$IMAGE_TAG"
 
 
