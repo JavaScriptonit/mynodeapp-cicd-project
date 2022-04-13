@@ -35,7 +35,7 @@ build_image:
     - shell
     - remote
   script:
-    - docker build -t registry.gitlab.com/nanuchi/mynodeapp-cicd-project:1.0 .
+    - docker build -t $CI_REGISTRY_IMAGE:1.0 .
 
 
 push_image:
@@ -47,9 +47,12 @@ push_image:
     - shell
     - remote
   before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD registry.gitlab.com
+    - echo "Docker registry url is $CI_REGISTRY"
+    - echo "Docker registry username is $CI_REGISTRY_USER"
+    - echo "Docker image repo is $CI_REGISTRY_IMAGE"
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker push registry.gitlab.com/nanuchi/mynodeapp-cicd-project:1.0
+    - docker push $CI_REGISTRY_IMAGE:1.0
 
 
 
