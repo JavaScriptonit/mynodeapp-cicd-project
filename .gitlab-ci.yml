@@ -64,6 +64,8 @@ deploy_to_dev:
     - ec2
     - shell
     - remote
+  before_script:
+    - chmod 400 $SSH_PRIVATE_KEY
   script:
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_HOST "
         docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
