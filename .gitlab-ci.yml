@@ -4,9 +4,13 @@ workflow:
       when: never
     - when: always
 
+stages:
+  - test
+  - build
 
 run_unit_tests:
   image: node:17-alpine3.14
+  stage: test
   tags:
     - ec2
     - docker
@@ -22,3 +26,30 @@ run_unit_tests:
       - app/junit.xml
     reports:
       junit: app/junit.xml
+
+
+build_image:
+  stage: build
+  tags:
+    - ec2
+    - shell
+    - remote
+  script:
+    - docker build -t registry.gitlab.com/nanuchi/mynodeapp-cicd-project:1.0 .
+
+
+push_image:
+  stage: build
+  needs:
+    - build_image
+  tags:
+    - ec2
+    - shell
+    - remote
+  before_script:
+    - docker login registry.gitlab.com
+  script:
+    - docker push registry.gitlab.com/nanuchi/mynodeapp-cicd-project:1.0
+
+
+
