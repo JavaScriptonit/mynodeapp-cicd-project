@@ -47,7 +47,7 @@ push_image:
     - shell
     - remote
   before_script:
-    - docker login registry.gitlab.com
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD registry.gitlab.com
   script:
     - docker push registry.gitlab.com/nanuchi/mynodeapp-cicd-project:1.0
 
