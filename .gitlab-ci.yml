@@ -16,3 +16,7 @@ run_unit_tests:
     - npm install
   script:
     - npm test
+  artifacts:
+    when: always
+    reports:
+      junit: app/junit.xml
