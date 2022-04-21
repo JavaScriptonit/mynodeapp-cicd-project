@@ -53,7 +53,7 @@ run_lint_checks:
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
-      - app/node_modules/
+      - /home/ubuntu/cache
     policy: pull
 
 
