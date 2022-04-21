@@ -46,6 +46,7 @@ run_lint_checks:
     - shell
     - remote
   before_script:
+    - cd app
     - npm install
   script:
     - echo "Running lint checks"
