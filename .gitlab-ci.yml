@@ -21,7 +21,7 @@ run_unit_tests:
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
-      - app/node_modules/
+      - node_modules/
   tags:
     - ec2
     - docker
@@ -40,10 +40,11 @@ run_unit_tests:
 
 
 run_lint_checks:
+  image: node:17-alpine3.14
   stage: test
   tags:
     - ec2
-    - shell
+    - docker
     - remote
   before_script:
     - cd app
@@ -53,7 +54,7 @@ run_lint_checks:
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
-      - /home/ubuntu/cache
+      - node_modules/
     policy: pull
 
 
