@@ -14,9 +14,14 @@ stages:
   - build
   - deploy
 
+
 run_unit_tests:
   image: node:17-alpine3.14
   stage: test
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - node_modules/
   tags:
     - ec2
     - docker
@@ -32,6 +37,23 @@ run_unit_tests:
       - app/junit.xml
     reports:
       junit: app/junit.xml
+
+
+run_lint_checks:
+  stage: test
+  tags:
+    - ec2
+    - shell
+    - remote
+  before_script:
+    - npm install
+  script:
+    - echo "Running lint checks"
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - node_modules/
+    policy: pull
 
 
 build_image:
