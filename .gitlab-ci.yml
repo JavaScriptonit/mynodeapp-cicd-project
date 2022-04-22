@@ -14,14 +14,13 @@ stages:
   - build
   - deploy
 
-
 run_unit_tests:
   image: node:17-alpine3.14
   stage: test
   cache:
-    key: "$CI_COMMIT_REF_SLUG"
+    key: "$CI_COMMIT_REF_NAME"
     paths:
-      - app/node_modules/
+      - app/node_modules
   tags:
     - ec2
     - docker
@@ -42,6 +41,11 @@ run_unit_tests:
 run_lint_checks:
   image: node:17-alpine3.14
   stage: test
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    paths:
+      - app/node_modules
+    policy: pull
   tags:
     - ec2
     - docker
@@ -51,11 +55,6 @@ run_lint_checks:
     - npm install
   script:
     - echo "Running lint checks"
-  cache:
-    key: "$CI_COMMIT_REF_SLUG"
-    paths:
-      - app/node_modules/
-    policy: pull
 
 
 build_image:
