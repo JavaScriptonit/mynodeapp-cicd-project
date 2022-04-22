@@ -37,6 +37,8 @@ run_unit_tests:
     reports:
       junit: app/junit.xml
 
+sast:
+  stage: test
 
 build_image:
   stage: build
@@ -99,4 +101,8 @@ deploy_to_dev:
     name: development
     url: $DEV_ENDPOINT
 
+
+
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
 
