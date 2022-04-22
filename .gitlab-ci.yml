@@ -95,6 +95,7 @@ deploy_to_dev:
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_HOST "
         docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
 
+        export COMPOSE_PROJECT_NAME=dev
         export DC_IMAGE_NAME=$IMAGE_NAME && 
         export DC_IMAGE_TAG=$VERSION &&
         export DC_APP_PORT=3000
@@ -130,6 +131,7 @@ deploy_to_staging:
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$STAGING_SERVER_HOST "
         docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
 
+        export COMPOSE_PROJECT_NAME=staging
         export DC_IMAGE_NAME=$IMAGE_NAME && 
         export DC_IMAGE_TAG=$VERSION &&
         export DC_APP_PORT=4000
@@ -139,6 +141,8 @@ deploy_to_staging:
   environment:
     name: staging
     url: $STAGING_ENDPOINT
+
+
 
 
 include:
