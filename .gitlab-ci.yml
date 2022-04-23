@@ -14,8 +14,6 @@
     - echo "----------------------"
     - echo ${SSH_KEY}
     - echo "----------------------"
-    - echo ${!SSH_PRIVATE_KEY}
-    - echo "----------------------"
     - echo ${!SSH_KEY}
     
 
