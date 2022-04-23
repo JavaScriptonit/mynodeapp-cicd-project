@@ -18,4 +18,4 @@
 deploy_to_dev:
   extends: .deploy
   variables:
-    SSH_KEY: $${SSH_PRIVATE_KEY}
+    SSH_KEY: '$${SSH_PRIVATE_KEY}'
