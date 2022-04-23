@@ -6,13 +6,13 @@
     - shell
     - remote
   variables:
-    SSH_KEY: ""
-  before_script:
-    - echo $SSH_KEY
-    - chmod 400 $SSH_KEY
+    SSH_KEY: ""  
   script:
     - echo "blaaa---------"
     - echo $SSH_PRIVATE_KEY
+    - chmod 400 $SSH_PRIVATE_KEY
+    - echo $SSH_KEY
+    - chmod 400 $SSH_KEY
 
 deploy_to_dev:
   extends: .deploy
