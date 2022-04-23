@@ -93,6 +93,7 @@ push_image:
     APP_PORT: ""
     ENDPOINT: ""
   before_script:
+    - echo $SSH_KEY
     - chmod 400 $SSH_KEY
     - export VERSION=$(cat version-file.txt)
   script:
