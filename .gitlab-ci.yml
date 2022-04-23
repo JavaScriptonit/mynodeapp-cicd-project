@@ -87,17 +87,17 @@ push_image:
   dependencies:
     - build_image
   variables:
-    SSH_PRIVATE_KEY: ""
+    SSH_KEY: ""
     SERVER_HOST: ""
     DEPLOY_ENV: ""
     APP_PORT: ""
     ENDPOINT: ""
   before_script:
-    - chmod 400 $SSH_PRIVATE_KEY
+    - chmod 400 $SSH_KEY
     - export VERSION=$(cat version-file.txt)
   script:
-    - scp -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ./docker-compose.yaml ubuntu@$SERVER_HOST:/home/ubuntu
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$SERVER_HOST "
+    - scp -o StrictHostKeyChecking=no -i $SSH_KEY ./docker-compose.yaml ubuntu@$SERVER_HOST:/home/ubuntu
+    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@$SERVER_HOST "
         docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
 
         export COMPOSE_PROJECT_NAME=$DEPLOY_ENV
@@ -117,7 +117,7 @@ deploy_to_dev:
   needs: 
     - build_image
   variables:
-    SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+    SSH_KEY: $SSH_PRIVATE_KEY
     SERVER_HOST: $DEV_SERVER_HOST
     DEPLOY_ENV: development
     APP_PORT: 3000
@@ -138,7 +138,7 @@ deploy_to_staging:
     - build_image
     - run_functional_tests
   variables:
-    SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+    SSH_KEY: $SSH_PRIVATE_KEY
     SERVER_HOST: $STAGING_SERVER_HOST
     DEPLOY_ENV: staging
     APP_PORT: 4000
@@ -158,7 +158,7 @@ deploy_to_prod:
     - build_image
     - run_performance_tests
   variables:
-    SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+    SSH_KEY: $SSH_PRIVATE_KEY
     SERVER_HOST: $PROD_SERVER_HOST
     DEPLOY_ENV: production
     APP_PORT: 5000
