@@ -93,7 +93,7 @@ push_image:
     APP_PORT: ""
     ENDPOINT: ""
   before_script:
-    - echo $SSH_KEY > deploy-key.pem
+    - echo $SSH_KEY | tr ' ' '\n' > deploy-key.pem
     - chmod 400 deploy-key.pem
     - export VERSION=$(cat version-file.txt)
   script:
