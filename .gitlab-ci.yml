@@ -43,12 +43,12 @@ build_image:
   before_script:
     - export PACKAGE_JSON_VERSION=$(cat app/package.json | jq -r .version)
     - export VERSION=$PACKAGE_JSON_VERSION.$CI_PIPELINE_IID
-    - echo $VERSION > version-file.txt
+    - echo "VERSION=$VERSION" >> build.env
   script:
     - docker build -t $IMAGE_NAME:$VERSION .
   artifacts:
-    paths:
-      - version-file.txt
+    reports:
+      dotenv: build.env
 
 
 push_image:
@@ -60,7 +60,6 @@ push_image:
     - shell
     - remote
   before_script:
-    - export VERSION=$(cat version-file.txt)
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker push $IMAGE_NAME:$VERSION 
@@ -74,7 +73,6 @@ deploy_to_dev:
     - remote
   before_script:
     - chmod 400 $SSH_PRIVATE_KEY
-    - export VERSION=$(cat version-file.txt)
   script:
     - scp -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ./docker-compose.yaml ubuntu@$DEV_SERVER_HOST:/home/ubuntu
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_HOST "
