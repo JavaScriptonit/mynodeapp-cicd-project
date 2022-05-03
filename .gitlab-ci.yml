@@ -55,8 +55,6 @@ push_image:
   stage: build
   needs:
     - build_image
-  dependencies:
-    - build_image
   tags:
     - ec2
     - shell
