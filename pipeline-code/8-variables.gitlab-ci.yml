@@ -1,0 +1,45 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  image_repository: docker.io/my-docker-id/myapp
+  image_tag: v1.0
+
+run_unit_tests:
+  only:
+    - main
+  stage: test
+  before_script:
+    - echo "Preparing test data..."
+  script:
+    - echo "Running unit tests for micro service $MICRO_SERVICE_NAME ..."
+  after_script:
+    - echo "Cleaning up temporary files..."
+
+build_image:
+  stage: build
+  script: 
+    - echo "Building the docker image..."
+    - echo "Tagging the docker image $image_repository:$image_tag ..."
+
+push_image:
+  stage: build
+  needs: 
+    - build_image
+  script: 
+    - echo "Logging into docker registry..."
+    - echo "Pushing docker image $image_repository:$image_tag  to registry..."
+
+deploy_image:
+  only:
+    - main
+  stage: deploy
+  script: 
+    - echo "Deploying docker image $image_repository:$image_tag to dev server..."       
+    - echo "Deploying docker image to $DEPLOYMENT_ENVIRONMENT using the following configuration file - $PROPERTIES_FILE..."
+    - cat $PROPERTIES_FILE
+
+
+
