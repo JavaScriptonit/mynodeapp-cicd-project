@@ -1,0 +1,21 @@
+stages:
+  - test
+  - build
+  - deploy
+
+run_unit_tests:
+  stage: test
+  before_script:
+    - echo "Preparing test data..."
+    - pwd
+    - ls
+    - mkdir test-data
+    - ls
+  script:
+    - echo "Running unit tests..."
+  after_script:
+    - echo "Cleaning up temporary files..."
+    - rm -r test-data
+    - ls
+
+...
