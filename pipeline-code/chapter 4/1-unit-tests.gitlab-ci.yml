@@ -1,0 +1,16 @@
+run_unit_tests:
+  image: node:17-alpine3.14
+  tags:
+    - ec2
+    - docker
+    - remote
+  before_script:
+    - cd app
+    - npm install
+  script:
+    - npm run test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - app/junit.xml
