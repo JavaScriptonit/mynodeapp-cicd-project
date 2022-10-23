@@ -14,4 +14,4 @@ build_image:
 push_image:
   script:
     - echo "Logging into Docker registry..."
-    - echo "Pushing Docker image to registry"
+    - echo "Pushing Docker image to registry."
