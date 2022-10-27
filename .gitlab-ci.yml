@@ -24,7 +24,7 @@ run_lint_tests:
 build_image:
   stage: build
   script:
-    - wrong-command "Building the Docker image..."
+    - echo "Building the Docker image..."
     - echo "Tagging the Docker image..."
 
 push_image:
