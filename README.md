@@ -14,4 +14,4 @@ Make sure to download jest library before running test, otherwise jest command d
 
 In order to see failing test, remove index.html or rename it and run tests.
 
-## some changes
+## some changes 30.10.2022
