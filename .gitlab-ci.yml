@@ -14,7 +14,7 @@ run_unit_tests:
   before_script:
     - echo "Preparing test data..."
   script:
-    - echo "Running unit tests for $MICRO_SERVICE_NAME"
+    - echo "Running unit tests for $MICRO_SERVICE_NAME ..."
   after_script:
     - echo "Cleaning up temporary files..."
 
@@ -25,7 +25,7 @@ run_lint_tests:
     - chmod +x prepare-tests.sh
     - ./prepare-tests.sh
   script:
-    - echo "Running lint tests for $MICRO_SERVICE_NAME"
+    - echo "Running lint tests for $MICRO_SERVICE_NAME ..."
   after_script:
     - echo "Cleaning up temporary files..."
     - rm -r test_data
@@ -54,4 +54,5 @@ deploy_image:
     - main
   stage: deploy
   script:
-    - echo "Deploying new Docker image to $DEPLOYMENT_ENVIRONMENT"
+    - echo "Deploying new Docker image to $DEPLOYMENT_ENVIRONMENT using the following configuration file - $PROPERTIES_FILE ..."
+    - cat $PROPERTIES_FILE
