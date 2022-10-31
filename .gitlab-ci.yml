@@ -9,6 +9,10 @@ stages:
   - build
   - deploy
 
+variables:
+  image_repository: doker.io/my-docker-id/myapp
+  image_tag: v1.0
+
 run_unit_tests:
   stage: test
   before_script:
@@ -37,7 +41,7 @@ build_image:
   stage: build
   script:
     - echo "Building the Docker image..."
-    - echo "Tagging the Docker image..."
+    - echo "Tagging the Docker image $image_repository:$image_tag"
 
 push_image:
   only:
@@ -47,12 +51,12 @@ push_image:
     - build_image
   script:
     - echo "Logging into Docker registry..."
-    - echo "Pushing Docker image to registry..."
+    - echo "Pushing Docker image $image_repository:$image_tag to registry..."
 
 deploy_image:
   only:
     - main
   stage: deploy
   script:
-    - echo "Deploying new Docker image to $DEPLOYMENT_ENVIRONMENT using the following configuration file - $PROPERTIES_FILE ..."
+    - echo "Deploying new Docker image $image_repository:$image_tag to $DEPLOYMENT_ENVIRONMENT using the following configuration file - $PROPERTIES_FILE ..."
     - cat $PROPERTIES_FILE
