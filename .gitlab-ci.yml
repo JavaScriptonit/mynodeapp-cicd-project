@@ -49,9 +49,8 @@ run_lint_tests:
 
 build_image:
   tags:
-  - ec2
-  - aws
-  - remote
+    - macos
+    - local
   only:
     - main
   stage: build
@@ -61,9 +60,8 @@ build_image:
 
 push_image:
   tags:
-  - ec2
-  - aws
-  - remote
+    - macos
+    - local
   only:
     - main
   stage: build
@@ -75,9 +73,8 @@ push_image:
 
 deploy_image:
   tags:
-  - ec2
-  - aws
-  - remote
+    - macos
+    - local
   only:
     - main
   stage: deploy
