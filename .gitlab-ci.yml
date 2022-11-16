@@ -21,7 +21,6 @@ run_unit_tests:
     - ec2
     - docker
     - remote
-  image: node:17-alpine3.14
   stage: test
   before_script:
     - echo "Preparing test data..."
