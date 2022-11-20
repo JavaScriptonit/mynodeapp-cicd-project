@@ -1,6 +1,6 @@
 {
   "name": "bootcamp-node-project",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
@@ -15,4 +15,3 @@
     "jest-junit": "13.0.0"
   }
 }
-
