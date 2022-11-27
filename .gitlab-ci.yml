@@ -7,7 +7,8 @@ workflow:
 variables:
   IMAGE_NAME: $CI_REGISTRY_IMAGE
   IMAGE_TAG: "1.1"
-  DEV_SERVER_HOST: 54.91.111.16
+  DEV_SERVER_HOST: 54.165.186.129
+  DEV_ENDPOINT: http://ec2-54-165-186-129.compute-1.amazonaws.com:3000
 
 stages:
   - test
@@ -67,6 +68,9 @@ deploy_to_dev:
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_HOST "
       docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
       docker run -d -p 3000:3000 $IMAGE_NAME:$IMAGE_TAG"
+  environment:
+    name: development
+    url: $DEV_ENDPOINT
 
 
 
