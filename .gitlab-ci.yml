@@ -21,7 +21,7 @@ run_unit_tests:
   cache:
     key: "$CI_COMMIT_REF_NAME"
     paths:
-      - /app/node_modules
+      - app/node_modules
     policy: pull-push
   tags:
     - ec2
@@ -32,6 +32,8 @@ run_unit_tests:
     - ls
     - pwd
     - npm install
+    - ls
+    - cd node_modules
     - ls
   script:
     - npm test
@@ -48,7 +50,7 @@ run_lint_checks:
   cache:
     key: "$CI_COMMIT_REF_NAME"
     paths:
-      - /app/node_modules
+      - app/node_modules
     policy: pull
   tags:
     - ec2
@@ -56,6 +58,7 @@ run_lint_checks:
     - remote
   before_script:
     - cd app
+    - ls
     - npm install
   script:
     - echo "Running lint checks"
