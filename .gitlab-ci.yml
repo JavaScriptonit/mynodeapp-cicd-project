@@ -29,7 +29,10 @@ run_unit_tests:
     - remote
   before_script:
     - cd app
+    - ls
+    - pwd
     - npm install
+    - ls
   script:
     - npm test
   artifacts:
