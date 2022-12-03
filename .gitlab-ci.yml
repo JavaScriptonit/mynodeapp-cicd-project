@@ -29,12 +29,7 @@ run_unit_tests:
     - remote
   before_script:
     - cd app
-    - ls
-    - pwd
     - npm install
-    - ls
-    - cd node_modules
-    - ls
   script:
     - npm test
   artifacts:
@@ -58,7 +53,6 @@ run_lint_checks:
     - remote
   before_script:
     - cd app
-    - ls
     - npm install
   script:
     - echo "Running lint checks"
