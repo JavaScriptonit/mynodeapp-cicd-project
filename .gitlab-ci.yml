@@ -95,5 +95,5 @@ deploy_to_dev:
     url: $DEV_ENDPOINT
 
 include:
-  - template: jobs/SAST.gitlab-ci.yml
+  - template: Jobs/SAST.gitlab-ci.yml
 
