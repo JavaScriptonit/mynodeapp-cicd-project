@@ -9,11 +9,17 @@ variables:
   IMAGE_TAG: "1.2"
   DEV_SERVER_HOST: 54.165.186.129
   DEV_ENDPOINT: http://ec2-54-165-186-129.compute-1.amazonaws.com:3000
+  STAGING_SERVER_HOST: 54.165.186.129 
+  STAGING_ENDPOINT: http://ec2-54-165-186-129.compute-1.amazonaws.com:4000
+  PROD_SERVER_HOST: 54.165.186.129 
+  PROD_ENDPOINT: http://ec2-54-165-186-129.compute-1.amazonaws.com:5000
 
 stages:
   - test
   - build
-  - deploy
+  - deploy_dev
+  - deploy_staging
+  - deploy_prod
 
 run_unit_tests:
   stage: test
@@ -74,7 +80,7 @@ push_image:
       - docker push $IMAGE_NAME:$VERSION
 
 deploy_to_dev:
-  stage: deploy
+  stage: deploy_dev
   tags:
     - ec2
     - shell
@@ -85,14 +91,76 @@ deploy_to_dev:
   script:
     - scp -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ./docker-compose.yaml ubuntu@$DEV_SERVER_HOST:/home/ubuntu
     - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEV_SERVER_HOST "
-      docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
-      export DC_IMAGE_NAME=$IMAGE_NAME &&
-      export DC_IMAGE_TAG=$VERSION &&
-      docker-compose down &&
-      docker-compose up -d"
+        docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
+
+        export COMPOSE_PROJECT_NAME=dev
+        export DC_IMAGE_NAME=$IMAGE_NAME &&
+        export DC_IMAGE_TAG=$VERSION &&
+        export DC_APP_PORT=3000 &&
+
+        docker-compose down &&
+        docker-compose up -d"
   environment:
     name: development
     url: $DEV_ENDPOINT
+
+run_functional_tests:
+  stage: deploy_dev
+  needs:
+    - deploy_to_dev
+  script:
+    - echo "running functional tests"
+
+
+deploy_to_staging:
+  stage: deploy_staging
+  tags:
+    - ec2
+    - shell
+    - remote
+  before_script:
+    - chmod 400 $SSH_PRIVATE_KEY
+    - export VERSION=$(cat version-file.txt)
+  script:
+    - scp -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ./docker-compose.yaml ubuntu@$STAGING_SERVER_HOST:/home/ubuntu
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$STAGING_SERVER_HOST "
+        docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
+
+        export COMPOSE_PROJECT_NAME=staging
+        export DC_IMAGE_NAME=$IMAGE_NAME &&
+        export DC_IMAGE_TAG=$VERSION &&
+        export DC_APP_PORT=4000 &&
+
+        docker-compose down &&
+        docker-compose up -d"
+  environment:
+    name: staging
+    url: $STAGING_ENDPOINT
+
+deploy_to_prod:
+  stage: deploy_prod
+  tags:
+    - ec2
+    - shell
+    - remote
+  before_script:
+    - chmod 400 $SSH_PRIVATE_KEY
+    - export VERSION=$(cat version-file.txt)
+  script:
+    - scp -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ./docker-compose.yaml ubuntu@$PROD_SERVER_HOST:/home/ubuntu
+    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$PROD_SERVER_HOST "
+        docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
+
+        export COMPOSE_PROJECT_NAME=prod
+        export DC_IMAGE_NAME=$IMAGE_NAME &&
+        export DC_IMAGE_TAG=$VERSION &&
+        export DC_APP_PORT=5000 &&
+
+        docker-compose down &&
+        docker-compose up -d"
+  environment:
+    name: production
+    url: $PROD_ENDPOINT
 
 include:
   - template: Jobs/SAST.gitlab-ci.yml
