@@ -85,7 +85,7 @@ push_image:
     - shell
     - remote
   before_script:
-    - echo $SSK_KEY | sed -e "s/-----BEGIN RSA PRIVATE KEY-----/&\n/" -e "s/-----END RSA PRIVATE KEY-----/\n&/" -e "s/\S\{64\}/&\n/g" > deploy-key.pem
+    - echo $SSH_KEY | sed -e "s/-----BEGIN RSA PRIVATE KEY-----/&\n/" -e "s/-----END RSA PRIVATE KEY-----/\n&/" -e "s/\S\{64\}/&\n/g" > deploy-key.pem
     - chmod 400 deploy-key.pem
     - export VERSION=$(cat version-file.txt)
   variables:
