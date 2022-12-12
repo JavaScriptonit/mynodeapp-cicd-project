@@ -154,6 +154,7 @@ deploy_to_prod:
     DEPLOY_ENV: production
     APP_PORT: 5000
     ENDPOINT: $PROD_ENDPOINT
+  when: manual
 
 include:
   - template: Jobs/SAST.gitlab-ci.yml
