@@ -7,12 +7,12 @@ workflow:
 variables:
   IMAGE_NAME: $CI_REGISTRY_IMAGE
   IMAGE_TAG: "1.2"
-  DEV_SERVER_HOST: 54.165.186.129
-  DEV_ENDPOINT: http://ec2-54-165-186-129.compute-1.amazonaws.com:3000
-  STAGING_SERVER_HOST: 54.165.186.129 
-  STAGING_ENDPOINT: http://ec2-54-165-186-129.compute-1.amazonaws.com:4000
-  PROD_SERVER_HOST: 54.165.186.129 
-  PROD_ENDPOINT: http://ec2-54-165-186-129.compute-1.amazonaws.com:5000
+  DEV_SERVER_HOST: 52.87.214.42
+  DEV_ENDPOINT: http://ec2-52-87-214-42.compute-1.amazonaws.com:3000
+  STAGING_SERVER_HOST: 52.87.214.42
+  STAGING_ENDPOINT: http://ec2-52-87-214-42.compute-1.amazonaws.com:4000
+  PROD_SERVER_HOST: 52.87.214.42
+  PROD_ENDPOINT: http://ec2-52-87-214-42.compute-1.amazonaws.com:5000
 
 stages:
   - test
